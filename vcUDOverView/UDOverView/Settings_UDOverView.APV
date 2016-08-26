@@ -1,0 +1,987 @@
+[MODULE]
+NAME 'Settings_UDOverView.clw'
+[COMMON]
+FROM ABC GENERATED
+[PROCEDURE]
+NAME Settings
+[COMMON]
+FROM ABC Window
+[DATA]
+[SCREENCONTROLS]
+! PROMPT('Current Field:'),USE(?CurrentField:Prompt)
+! ENTRY(@n-14),USE(CurrentField),RIGHT(1)
+[REPORTCONTROLS]
+! STRING(@n-14),USE(CurrentField),RIGHT(1)
+CurrentField             LONG
+!!> GUID('8326bf11-c7d5-4b7e-a42c-944ac1c88852'),PROMPT('Current Field:'),HEADER('Current Field'),PICTURE(@n-14),TYPEMODE(INS),JUSTIFY(RIGHT,1)
+[SCREENCONTROLS]
+! PROMPT('Color RGB:'),USE(?ColorRGB:Prompt)
+! ENTRY(@n-14),USE(ColorRGB),RIGHT(1)
+[REPORTCONTROLS]
+! STRING(@n-14),USE(ColorRGB),RIGHT(1)
+ColorRGB                 LONG
+!!> GUID('ca927b03-a3d3-4a11-a4bd-ac6af6b6ef1b'),PROMPT('Color RGB:'),HEADER('Color RGB'),PICTURE(@n-14),TYPEMODE(INS),JUSTIFY(RIGHT,1)
+[SCREENCONTROLS]
+! PROMPT('Text Color:'),USE(?TextColor:Prompt)
+! ENTRY(@s20),USE(TextColor),LEFT
+[REPORTCONTROLS]
+! STRING(@s20),USE(TextColor),LEFT
+TextColor                STRING(20)
+!!> GUID('ec85d746-de86-44f3-8453-4aae7f1a6513'),PROMPT('Text Color:'),HEADER('Text Color'),PICTURE(@s20),TYPEMODE(INS),JUSTIFY(LEFT)
+[SCREENCONTROLS]
+! PROMPT('Background Color:'),USE(?BackgroundColor:Prompt)
+! ENTRY(@s20),USE(BackgroundColor),LEFT
+[REPORTCONTROLS]
+! STRING(@s20),USE(BackgroundColor),LEFT
+BackgroundColor          STRING(20)
+!!> GUID('7787b560-c609-42b7-b9f3-577f8501af85'),PROMPT('Background Color:'),HEADER('Background Color'),PICTURE(@s20),TYPEMODE(INS),JUSTIFY(LEFT)
+[SCREENCONTROLS]
+! PROMPT('Selected Text Color:'),USE(?SelectedTextColor:Prompt)
+! ENTRY(@s20),USE(SelectedTextColor),LEFT
+[REPORTCONTROLS]
+! STRING(@s20),USE(SelectedTextColor),LEFT
+SelectedTextColor        STRING(20)
+!!> GUID('dd268ecd-bb7e-419d-8d0e-e8c9e4542e58'),PROMPT('Selected Text Color:'),HEADER('Selected Text Color'),PICTURE(@s20),TYPEMODE(INS),JUSTIFY(LEFT)
+[SCREENCONTROLS]
+! PROMPT('Selected Background Color:'),USE(?SelectedBackgroundColor:Prompt)
+! ENTRY(@s20),USE(SelectedBackgroundColor),LEFT
+[REPORTCONTROLS]
+! STRING(@s20),USE(SelectedBackgroundColor),LEFT
+SelectedBackgroundColor  STRING(20)
+!!> GUID('ee133fb1-f0c6-4ef7-ab9e-f9b1edbe2f9b'),PROMPT('Selected Background Color:'),HEADER('Selected Background Color'),PICTURE(@s20),TYPEMODE(INS),JUSTIFY(LEFT)
+[SCREENCONTROLS]
+! PROMPT('Text Color:'),USE(?TextColorEvents:Prompt)
+! ENTRY(@s20),USE(TextColorEvents),LEFT
+[REPORTCONTROLS]
+! STRING(@s20),USE(TextColorEvents),LEFT
+TextColorEvents          STRING(20)
+!!> GUID('a6544f99-9540-4e4c-bb0a-7f20aaac05c7'),PROMPT('Text Color:'),HEADER('Text Color'),PICTURE(@s20),TYPEMODE(INS),JUSTIFY(LEFT)
+[SCREENCONTROLS]
+! PROMPT('Background Color:'),USE(?BackgroundColorEvents:Prompt)
+! ENTRY(@s20),USE(BackgroundColorEvents),LEFT
+[REPORTCONTROLS]
+! STRING(@s20),USE(BackgroundColorEvents),LEFT
+BackgroundColorEvents    STRING(20)
+!!> GUID('8ac1cfc5-1475-422e-a035-a3a1a70d3e18'),PROMPT('Background Color:'),HEADER('Background Color'),PICTURE(@s20),TYPEMODE(INS),JUSTIFY(LEFT)
+[SCREENCONTROLS]
+! PROMPT('Selected Text Color:'),USE(?SelectedTextColorEvents:Prompt)
+! ENTRY(@s20),USE(SelectedTextColorEvents),LEFT
+[REPORTCONTROLS]
+! STRING(@s20),USE(SelectedTextColorEvents),LEFT
+SelectedTextColorEvents  STRING(20)
+!!> GUID('8146207a-8b3f-454e-8501-ab468bfbe1b6'),PROMPT('Selected Text Color:'),HEADER('Selected Text Color'),PICTURE(@s20),TYPEMODE(INS),JUSTIFY(LEFT)
+[SCREENCONTROLS]
+! PROMPT('Selected Background Color:'),USE(?SelectedBackgroundColorEvents:Prompt)
+! ENTRY(@s20),USE(SelectedBackgroundColorEvents),LEFT
+[REPORTCONTROLS]
+! STRING(@s20),USE(SelectedBackgroundColorEvents),LEFT
+SelectedBackgroundColorEvents STRING(20)
+!!> GUID('3d4517db-3efc-4b41-9b49-96891f585ff8'),PROMPT('Selected Background Color:'),HEADER('Selected Background Color'),PICTURE(@s20),TYPEMODE(INS),JUSTIFY(LEFT)
+[PROMPTS]
+%ClassItem UNIQUE DEFAULT  ('Default', 'WindowToolbar')
+%DefaultBaseClassType DEPEND %ClassItem DEFAULT TIMES 2
+WHEN  ('Default') ('WindowManager')
+WHEN  ('WindowToolbar') ('ToolbarClass')
+
+%ActualDefaultBaseClassType DEPEND %ClassItem DEFAULT TIMES 2
+WHEN  ('Default') ('')
+WHEN  ('WindowToolbar') ('')
+
+%ClassLines DEPEND %ClassItem MULTI DEFAULT TIMES 1
+WHEN  ('Default') ('Init {19}PROCEDURE(),BYTE,PROC,DERIVED', 'Kill {19}PROCEDURE(),BYTE,PROC,DERIVED', |
+  'Reset {18}PROCEDURE(BYTE Force=0),DERIVED', 'TakeAccepted {11}PROCEDURE(),BYTE,PROC,DERIVED', |
+  'TakeEvent {14}PROCEDURE(),BYTE,PROC,DERIVED', 'TakeWindowEvent        PROCEDURE(),BYTE,PROC,DERIVED')
+
+%ReturnValue FIELD  ()
+%ProcedureOneInstance LONG  (0)
+%WindowOperationMode DEFAULT  ('Use WINDOW setting')
+%INISaveWindow LONG  (0)
+%ProcedureDisableEnhanceFocus LONG  (0)
+%ProcedureUseEnterInsteadTabOverride LONG  (0)
+%WindowUseEnterInsteadTab LONG  (1)
+%ProcedureUseEnterInsteadTabExcludeListCombo LONG  (0)
+%ProcedureUseEnterInsteadTabEnableNextTabStop LONG  (0)
+%ProcedureUseEnterInsteadTabExcludeG LONG  (1)
+%WindowUseEnterInsteadTabExclude MULTI DEFAULT  ()
+%GlobalObject DEPEND %ClassItem DEFAULT TIMES 2
+WHEN  ('Default') ('NO')
+WHEN  ('WindowToolbar') ('NO')
+
+%ThisObjectName DEPEND %ClassItem DEFAULT TIMES 2
+WHEN  ('Default') ('ThisWindow')
+WHEN  ('WindowToolbar') ('Toolbar')
+
+%UseDefaultABCBaseClass DEPEND %ClassItem LONG TIMES 2
+WHEN  ('Default') (1)
+WHEN  ('WindowToolbar') (1)
+
+%UseABCBaseClass DEPEND %ClassItem LONG TIMES 2
+WHEN  ('Default') (1)
+WHEN  ('WindowToolbar') (1)
+
+%ABCBaseClass DEPEND %ClassItem DEFAULT TIMES 2
+WHEN  ('Default') ('')
+WHEN  ('WindowToolbar') ('')
+
+%ExtBaseClass DEPEND %ClassItem DEFAULT TIMES 0
+
+%BaseClassIncludeFile DEPEND %ClassItem DEFAULT TIMES 0
+
+%DeriveFromBaseClass DEPEND %ClassItem LONG TIMES 2
+WHEN  ('Default') (0)
+WHEN  ('WindowToolbar') (0)
+
+%NewMethods DEPEND %ClassItem MULTI LONG TIMES 0
+
+%NewMethodName DEPEND %NewMethods DEFAULT TIMES 0
+
+%NewMethodPrototype DEPEND %NewMethods DEFAULT TIMES 0
+
+%NewClassPropertyItems DEPEND %ClassItem MULTI LONG TIMES 0
+
+%NewClassProperty DEPEND %NewClassPropertyItems DEFAULT TIMES 0
+
+%NewClassDataType DEPEND %NewClassPropertyItems DEFAULT TIMES 1
+WHEN  ('WindowToolbar')TIMES 0
+
+%NewClassOtherType DEPEND %NewClassPropertyItems DEFAULT TIMES 0
+
+%NewClassDataIsRef DEPEND %NewClassPropertyItems LONG TIMES 0
+
+%NewClassDataSize DEPEND %NewClassPropertyItems DEFAULT TIMES 0
+
+%NewClassDataDim1 DEPEND %NewClassPropertyItems DEFAULT TIMES 0
+
+%NewClassDataDim2 DEPEND %NewClassPropertyItems DEFAULT TIMES 0
+
+%NewClassDataDim3 DEPEND %NewClassPropertyItems DEFAULT TIMES 0
+
+%NewClassDataDim4 DEPEND %NewClassPropertyItems DEFAULT TIMES 0
+
+%ClassMethods DEPEND %ClassItem MULTI LONG TIMES 0
+
+%ClassMethodName DEPEND %ClassMethods DEFAULT TIMES 0
+
+%ClassMethodPrototype DEPEND %ClassMethods DEFAULT TIMES 0
+
+%ClassPropertyItems DEPEND %ClassItem MULTI LONG TIMES 0
+
+%ClassProperty DEPEND %ClassPropertyItems DEFAULT TIMES 0
+
+%ClassDataType DEPEND %ClassPropertyItems DEFAULT TIMES 1
+WHEN  ('WindowToolbar')TIMES 0
+
+%ClassOtherType DEPEND %ClassPropertyItems DEFAULT TIMES 0
+
+%ClassDataIsRef DEPEND %ClassPropertyItems LONG TIMES 0
+
+%ClassDataSize DEPEND %ClassPropertyItems DEFAULT TIMES 0
+
+%ClassDataDim1 DEPEND %ClassPropertyItems DEFAULT TIMES 0
+
+%ClassDataDim2 DEPEND %ClassPropertyItems DEFAULT TIMES 0
+
+%ClassDataDim3 DEPEND %ClassPropertyItems DEFAULT TIMES 0
+
+%ClassDataDim4 DEPEND %ClassPropertyItems DEFAULT TIMES 0
+
+%WindowStyles MULTI LONG  ()
+%WindowStyleFontName DEPEND %WindowStyles DEFAULT TIMES 0
+
+%WindowStyleFontNameVariable DEPEND %WindowStyles DEFAULT TIMES 0
+
+%WindowStyleFontNameIsVariable DEPEND %WindowStyles LONG TIMES 0
+
+%WindowStyleFontSize DEPEND %WindowStyles DEFAULT TIMES 0
+
+%WindowStyleFontSizeVariable DEPEND %WindowStyles DEFAULT TIMES 0
+
+%WindowStyleFontSizeIsVariable DEPEND %WindowStyles LONG TIMES 0
+
+%WindowStyleFontStyle DEPEND %WindowStyles DEFAULT TIMES 0
+
+%WindowStyleFontStyleVariable DEPEND %WindowStyles DEFAULT TIMES 0
+
+%WindowStyleFontStyleIsVariable DEPEND %WindowStyles LONG TIMES 0
+
+%WindowStyleFontColor DEPEND %WindowStyles DEFAULT TIMES 0
+
+%WindowStyleFontCharSet DEPEND %WindowStyles DEFAULT TIMES 0
+
+%WindowStyleForegroundNormal DEPEND %WindowStyles LONG TIMES 0
+
+%WindowStyleForegroundNormalVariable DEPEND %WindowStyles DEFAULT TIMES 0
+
+%WindowStyleForegroundNormalIsVariable DEPEND %WindowStyles LONG TIMES 0
+
+%WindowStyleBackgroundNormal DEPEND %WindowStyles LONG TIMES 0
+
+%WindowStyleBackgroundNormalVariable DEPEND %WindowStyles DEFAULT TIMES 0
+
+%WindowStyleBackgroundNormalIsVariable DEPEND %WindowStyles LONG TIMES 0
+
+%WindowStyleForegroundSelected DEPEND %WindowStyles LONG TIMES 0
+
+%WindowStyleForegroundSelectedVariable DEPEND %WindowStyles DEFAULT TIMES 0
+
+%WindowStyleForegroundSelectedIsVariable DEPEND %WindowStyles LONG TIMES 0
+
+%WindowStyleBackgroundSelected DEPEND %WindowStyles LONG TIMES 0
+
+%WindowStyleBackgroundSelectedVariable DEPEND %WindowStyles DEFAULT TIMES 0
+
+%WindowStyleBackgroundSelectedIsVariable DEPEND %WindowStyles LONG TIMES 0
+
+%WindowStylePicture DEPEND %WindowStyles DEFAULT TIMES 0
+
+%WindowStylePictureVariable DEPEND %WindowStyles DEFAULT TIMES 0
+
+%WindowStylePictureIsVariable DEPEND %WindowStyles LONG TIMES 0
+
+%WindowStyleOtherListboxes MULTI DEFAULT  ()
+%ProcedureAutoBindFields MULTI LONG  ()
+%ProcedureAutoBindField DEPEND %ProcedureAutoBindFields DEFAULT TIMES 0
+
+%ProcedureAutoBindFieldTPL DEPEND %ProcedureAutoBindFields DEFAULT TIMES 0
+
+%ProcedureAutoBindProcedures MULTI LONG  ()
+%ProcedureAutoBindProcedure DEPEND %ProcedureAutoBindProcedures DEFAULT TIMES 0
+
+%ProcedureAutoBindProcedureTPL DEPEND %ProcedureAutoBindProcedures DEFAULT TIMES 0
+
+%ProcedureAutoBindFieldsIgnored MULTI LONG  ()
+%ProcedureAutoBindFieldIgnored DEPEND %ProcedureAutoBindFieldsIgnored DEFAULT TIMES 0
+
+%ProcedureAutoBindProceduresIgnored MULTI LONG  ()
+%ProcedureAutoBindProcedureIgnored DEPEND %ProcedureAutoBindProceduresIgnored DEFAULT TIMES 0
+
+%ProcedureAutoBindValidToAddField LONG  (0)
+%ProcedureUserBindFields MULTI LONG  ()
+%ProcedureUserBindField DEPEND %ProcedureUserBindFields FIELD TIMES 0
+
+%ProcedureAutoBindFieldIgnore DEPEND %ProcedureAutoBindFields LONG TIMES 0
+
+%ProcedureUserBindProcedures MULTI LONG  ()
+%ProcedureUserBindProcedure DEPEND %ProcedureUserBindProcedures PROCEDURE TIMES 0
+
+%ProcedureAutoBindProcedureIgnore DEPEND %ProcedureAutoBindProcedures LONG TIMES 0
+
+%ProcedureUserBindExpressions MULTI LONG  ()
+%ProcedureUserBindExpressionName DEPEND %ProcedureUserBindExpressions DEFAULT TIMES 0
+
+%ProcedureUserBindExpression DEPEND %ProcedureUserBindExpressions DEFAULT TIMES 0
+
+%PreserveVarsLoc MULTI LONG  ()
+%PreserveVarLoc DEPEND %PreserveVarsLoc DEFAULT TIMES 0
+
+%ExtUITabIcon DEPEND %Control DEFAULT TIMES 0
+
+%ExtUITabStyleOverrideGlobal DEPEND %Control LONG TIMES 0
+
+%ExtUITabStyle DEPEND %Control DEFAULT TIMES 9
+WHEN  ('') ('Default')
+WHEN  ('?HLColorButton') ('Default')
+WHEN  ('?HLColorButton:2') ('Default')
+WHEN  ('?HLColorButton:3') ('Default')
+WHEN  ('?HLColorButton:4') ('Default')
+WHEN  ('?HLColorButton:5') ('Default')
+WHEN  ('?HLColorButton:6') ('Default')
+WHEN  ('?HLColorButton:7') ('Default')
+WHEN  ('?HLColorButton:8') ('Default')
+
+%FieldGradientColorType DEPEND %Control DEFAULT TIMES 9
+WHEN  ('') ('Off')
+WHEN  ('?HLColorButton') ('Off')
+WHEN  ('?HLColorButton:2') ('Off')
+WHEN  ('?HLColorButton:3') ('Off')
+WHEN  ('?HLColorButton:4') ('Off')
+WHEN  ('?HLColorButton:5') ('Off')
+WHEN  ('?HLColorButton:6') ('Off')
+WHEN  ('?HLColorButton:7') ('Off')
+WHEN  ('?HLColorButton:8') ('Off')
+
+%FieldGradientColorTypeVariable DEPEND %Control DEFAULT TIMES 9
+WHEN  ('') ('')
+WHEN  ('?HLColorButton') ('')
+WHEN  ('?HLColorButton:2') ('')
+WHEN  ('?HLColorButton:3') ('')
+WHEN  ('?HLColorButton:4') ('')
+WHEN  ('?HLColorButton:5') ('')
+WHEN  ('?HLColorButton:6') ('')
+WHEN  ('?HLColorButton:7') ('')
+WHEN  ('?HLColorButton:8') ('')
+
+%FieldGradientColorTypeIsVariable DEPEND %Control LONG TIMES 9
+WHEN  ('') (0)
+WHEN  ('?HLColorButton') (0)
+WHEN  ('?HLColorButton:2') (0)
+WHEN  ('?HLColorButton:3') (0)
+WHEN  ('?HLColorButton:4') (0)
+WHEN  ('?HLColorButton:5') (0)
+WHEN  ('?HLColorButton:6') (0)
+WHEN  ('?HLColorButton:7') (0)
+WHEN  ('?HLColorButton:8') (0)
+
+%FieldGradientColorFrom DEPEND %Control LONG TIMES 9
+WHEN  ('') (-1)
+WHEN  ('?HLColorButton') (-1)
+WHEN  ('?HLColorButton:2') (-1)
+WHEN  ('?HLColorButton:3') (-1)
+WHEN  ('?HLColorButton:4') (-1)
+WHEN  ('?HLColorButton:5') (-1)
+WHEN  ('?HLColorButton:6') (-1)
+WHEN  ('?HLColorButton:7') (-1)
+WHEN  ('?HLColorButton:8') (-1)
+
+%FieldGradientColorFromVariable DEPEND %Control DEFAULT TIMES 0
+
+%FieldGradientColorFromIsVariable DEPEND %Control LONG TIMES 9
+WHEN  ('') (0)
+WHEN  ('?HLColorButton') (0)
+WHEN  ('?HLColorButton:2') (0)
+WHEN  ('?HLColorButton:3') (0)
+WHEN  ('?HLColorButton:4') (0)
+WHEN  ('?HLColorButton:5') (0)
+WHEN  ('?HLColorButton:6') (0)
+WHEN  ('?HLColorButton:7') (0)
+WHEN  ('?HLColorButton:8') (0)
+
+%FieldGradientColorTo DEPEND %Control LONG TIMES 9
+WHEN  ('') (-1)
+WHEN  ('?HLColorButton') (-1)
+WHEN  ('?HLColorButton:2') (-1)
+WHEN  ('?HLColorButton:3') (-1)
+WHEN  ('?HLColorButton:4') (-1)
+WHEN  ('?HLColorButton:5') (-1)
+WHEN  ('?HLColorButton:6') (-1)
+WHEN  ('?HLColorButton:7') (-1)
+WHEN  ('?HLColorButton:8') (-1)
+
+%FieldGradientColorToVariable DEPEND %Control DEFAULT TIMES 0
+
+%FieldGradientColorToIsVariable DEPEND %Control LONG TIMES 9
+WHEN  ('') (0)
+WHEN  ('?HLColorButton') (0)
+WHEN  ('?HLColorButton:2') (0)
+WHEN  ('?HLColorButton:3') (0)
+WHEN  ('?HLColorButton:4') (0)
+WHEN  ('?HLColorButton:5') (0)
+WHEN  ('?HLColorButton:6') (0)
+WHEN  ('?HLColorButton:7') (0)
+WHEN  ('?HLColorButton:8') (0)
+
+%ButtonAction DEPEND %Control DEFAULT TIMES 11
+WHEN  ('') ('No Special Action')
+WHEN  ('?BUTTONCancel') ('No Special Action')
+WHEN  ('?BUTTONOK') ('No Special Action')
+WHEN  ('?HLColorButton') ('No Special Action')
+WHEN  ('?HLColorButton:2') ('No Special Action')
+WHEN  ('?HLColorButton:3') ('No Special Action')
+WHEN  ('?HLColorButton:4') ('No Special Action')
+WHEN  ('?HLColorButton:5') ('No Special Action')
+WHEN  ('?HLColorButton:6') ('No Special Action')
+WHEN  ('?HLColorButton:7') ('No Special Action')
+WHEN  ('?HLColorButton:8') ('No Special Action')
+
+%ButtonRunName DEPEND %Control DEFAULT TIMES 8
+WHEN  ('?HLColorButton') ('')
+WHEN  ('?HLColorButton:2') ('')
+WHEN  ('?HLColorButton:3') ('')
+WHEN  ('?HLColorButton:4') ('')
+WHEN  ('?HLColorButton:5') ('')
+WHEN  ('?HLColorButton:6') ('')
+WHEN  ('?HLColorButton:7') ('')
+WHEN  ('?HLColorButton:8') ('')
+
+%ButtonRunParameters DEPEND %Control DEFAULT TIMES 8
+WHEN  ('?HLColorButton') ('')
+WHEN  ('?HLColorButton:2') ('')
+WHEN  ('?HLColorButton:3') ('')
+WHEN  ('?HLColorButton:4') ('')
+WHEN  ('?HLColorButton:5') ('')
+WHEN  ('?HLColorButton:6') ('')
+WHEN  ('?HLColorButton:7') ('')
+WHEN  ('?HLColorButton:8') ('')
+
+%ButtonProcedure DEPEND %Control PROCEDURE TIMES 8
+WHEN  ('?HLColorButton') ()
+WHEN  ('?HLColorButton:2') ()
+WHEN  ('?HLColorButton:3') ()
+WHEN  ('?HLColorButton:4') ()
+WHEN  ('?HLColorButton:5') ()
+WHEN  ('?HLColorButton:6') ()
+WHEN  ('?HLColorButton:7') ()
+WHEN  ('?HLColorButton:8') ()
+
+%ButtonThread DEPEND %Control LONG TIMES 8
+WHEN  ('?HLColorButton') (0)
+WHEN  ('?HLColorButton:2') (0)
+WHEN  ('?HLColorButton:3') (0)
+WHEN  ('?HLColorButton:4') (0)
+WHEN  ('?HLColorButton:5') (0)
+WHEN  ('?HLColorButton:6') (0)
+WHEN  ('?HLColorButton:7') (0)
+WHEN  ('?HLColorButton:8') (0)
+
+%ButtonThreadStack DEPEND %Control DEFAULT TIMES 11
+WHEN  ('') ('25000')
+WHEN  ('?BUTTONCancel') ('25000')
+WHEN  ('?BUTTONOK') ('25000')
+WHEN  ('?HLColorButton') ('25000')
+WHEN  ('?HLColorButton:2') ('25000')
+WHEN  ('?HLColorButton:3') ('25000')
+WHEN  ('?HLColorButton:4') ('25000')
+WHEN  ('?HLColorButton:5') ('25000')
+WHEN  ('?HLColorButton:6') ('25000')
+WHEN  ('?HLColorButton:7') ('25000')
+WHEN  ('?HLColorButton:8') ('25000')
+
+%ButtonParameters DEPEND %Control DEFAULT TIMES 8
+WHEN  ('?HLColorButton') ('')
+WHEN  ('?HLColorButton:2') ('')
+WHEN  ('?HLColorButton:3') ('')
+WHEN  ('?HLColorButton:4') ('')
+WHEN  ('?HLColorButton:5') ('')
+WHEN  ('?HLColorButton:6') ('')
+WHEN  ('?HLColorButton:7') ('')
+WHEN  ('?HLColorButton:8') ('')
+
+%ButtonReturnValueAssignment DEPEND %Control FIELD TIMES 8
+WHEN  ('?HLColorButton') ()
+WHEN  ('?HLColorButton:2') ()
+WHEN  ('?HLColorButton:3') ()
+WHEN  ('?HLColorButton:4') ()
+WHEN  ('?HLColorButton:5') ()
+WHEN  ('?HLColorButton:6') ()
+WHEN  ('?HLColorButton:7') ()
+WHEN  ('?HLColorButton:8') ()
+
+%ButtonReturnValueReferenceAssign DEPEND %Control LONG TIMES 8
+WHEN  ('?HLColorButton') (0)
+WHEN  ('?HLColorButton:2') (0)
+WHEN  ('?HLColorButton:3') (0)
+WHEN  ('?HLColorButton:4') (0)
+WHEN  ('?HLColorButton:5') (0)
+WHEN  ('?HLColorButton:6') (0)
+WHEN  ('?HLColorButton:7') (0)
+WHEN  ('?HLColorButton:8') (0)
+
+%ButtonRequest DEPEND %Control DEFAULT TIMES 11
+WHEN  ('') ('None')
+WHEN  ('?BUTTONCancel') ('None')
+WHEN  ('?BUTTONOK') ('None')
+WHEN  ('?HLColorButton') ('None')
+WHEN  ('?HLColorButton:2') ('None')
+WHEN  ('?HLColorButton:3') ('None')
+WHEN  ('?HLColorButton:4') ('None')
+WHEN  ('?HLColorButton:5') ('None')
+WHEN  ('?HLColorButton:6') ('None')
+WHEN  ('?HLColorButton:7') ('None')
+WHEN  ('?HLColorButton:8') ('None')
+
+%ButtonThreadParameters DEPEND %Control DEFAULT TIMES 8
+WHEN  ('?HLColorButton') ('')
+WHEN  ('?HLColorButton:2') ('')
+WHEN  ('?HLColorButton:3') ('')
+WHEN  ('?HLColorButton:4') ('')
+WHEN  ('?HLColorButton:5') ('')
+WHEN  ('?HLColorButton:6') ('')
+WHEN  ('?HLColorButton:7') ('')
+WHEN  ('?HLColorButton:8') ('')
+
+%ButtonThreadReturnValueAssignment DEPEND %Control FIELD TIMES 8
+WHEN  ('?HLColorButton') ()
+WHEN  ('?HLColorButton:2') ()
+WHEN  ('?HLColorButton:3') ()
+WHEN  ('?HLColorButton:4') ()
+WHEN  ('?HLColorButton:5') ()
+WHEN  ('?HLColorButton:6') ()
+WHEN  ('?HLColorButton:7') ()
+WHEN  ('?HLColorButton:8') ()
+
+%PreLookupKey DEPEND %Control KEY TIMES 0
+
+%PreLookupField DEPEND %Control COMPONENT TIMES 0
+
+%PreLookupProcedure DEPEND %Control PROCEDURE TIMES 0
+
+%PreLookupProcedureParameters DEPEND %Control DEFAULT TIMES 0
+
+%PostLookupKey DEPEND %Control KEY TIMES 0
+
+%PostLookupField DEPEND %Control COMPONENT TIMES 0
+
+%PostLookupProcedure DEPEND %Control PROCEDURE TIMES 0
+
+%PostLookupProcedureParameters DEPEND %Control DEFAULT TIMES 0
+
+%PostLookupDuringValidate DEPEND %Control LONG TIMES 17
+WHEN  ('') (1)
+WHEN  ('?BackgroundColor') (1)
+WHEN  ('?BackgroundColorEvents') (1)
+WHEN  ('?HLColorButton') (1)
+WHEN  ('?HLColorButton:2') (1)
+WHEN  ('?HLColorButton:3') (1)
+WHEN  ('?HLColorButton:4') (1)
+WHEN  ('?HLColorButton:5') (1)
+WHEN  ('?HLColorButton:6') (1)
+WHEN  ('?HLColorButton:7') (1)
+WHEN  ('?HLColorButton:8') (1)
+WHEN  ('?SelectedBackgroundColor') (1)
+WHEN  ('?SelectedBackgroundColorEvents') (1)
+WHEN  ('?SelectedTextColor') (1)
+WHEN  ('?SelectedTextColorEvents') (1)
+WHEN  ('?TextColor') (1)
+WHEN  ('?TextColorEvents') (1)
+
+%LookupAssign DEPEND %Control MULTI LONG TIMES 0
+
+%MoreTarget DEPEND %LookupAssign FIELD TIMES 0
+
+%MoreField DEPEND %LookupAssign DEFAULT TIMES 0
+
+%ForceWindowRefresh DEPEND %Control LONG TIMES 0
+
+%CheckedAssigns DEPEND %Control MULTI LONG TIMES 0
+
+%CheckedAssignVariable DEPEND %CheckedAssigns FIELD TIMES 0
+
+%CheckedAssignValue DEPEND %CheckedAssigns DEFAULT TIMES 0
+
+%CheckedHides DEPEND %Control MULTI LONG TIMES 0
+
+%CheckedControl DEPEND %CheckedHides DEFAULT TIMES 0
+
+%CheckedControlAction DEPEND %CheckedHides DEFAULT TIMES 9
+WHEN  ('')TIMES 0
+WHEN  ('?HLColorButton')TIMES 0
+WHEN  ('?HLColorButton:2')TIMES 0
+WHEN  ('?HLColorButton:3')TIMES 0
+WHEN  ('?HLColorButton:4')TIMES 0
+WHEN  ('?HLColorButton:5')TIMES 0
+WHEN  ('?HLColorButton:6')TIMES 0
+WHEN  ('?HLColorButton:7')TIMES 0
+WHEN  ('?HLColorButton:8')TIMES 0
+
+%CheckedEnables DEPEND %Control MULTI LONG TIMES 0
+
+%CheckedControl1 DEPEND %CheckedEnables DEFAULT TIMES 0
+
+%CheckedControl1Action DEPEND %CheckedEnables DEFAULT TIMES 9
+WHEN  ('')TIMES 0
+WHEN  ('?HLColorButton')TIMES 0
+WHEN  ('?HLColorButton:2')TIMES 0
+WHEN  ('?HLColorButton:3')TIMES 0
+WHEN  ('?HLColorButton:4')TIMES 0
+WHEN  ('?HLColorButton:5')TIMES 0
+WHEN  ('?HLColorButton:6')TIMES 0
+WHEN  ('?HLColorButton:7')TIMES 0
+WHEN  ('?HLColorButton:8')TIMES 0
+
+%UncheckedAssigns DEPEND %Control MULTI LONG TIMES 0
+
+%UncheckedAssignVariable DEPEND %UncheckedAssigns FIELD TIMES 0
+
+%UncheckedAssignValue DEPEND %UncheckedAssigns DEFAULT TIMES 0
+
+%UnCheckedHides DEPEND %Control MULTI LONG TIMES 0
+
+%UnCheckedControl DEPEND %UnCheckedHides DEFAULT TIMES 0
+
+%UnCheckedControlAction DEPEND %UnCheckedHides DEFAULT TIMES 9
+WHEN  ('')TIMES 0
+WHEN  ('?HLColorButton')TIMES 0
+WHEN  ('?HLColorButton:2')TIMES 0
+WHEN  ('?HLColorButton:3')TIMES 0
+WHEN  ('?HLColorButton:4')TIMES 0
+WHEN  ('?HLColorButton:5')TIMES 0
+WHEN  ('?HLColorButton:6')TIMES 0
+WHEN  ('?HLColorButton:7')TIMES 0
+WHEN  ('?HLColorButton:8')TIMES 0
+
+%UnCheckedEnables DEPEND %Control MULTI LONG TIMES 0
+
+%UnCheckedControl1 DEPEND %UnCheckedEnables DEFAULT TIMES 0
+
+%UnCheckedControl1Action DEPEND %UnCheckedEnables DEFAULT TIMES 9
+WHEN  ('')TIMES 0
+WHEN  ('?HLColorButton')TIMES 0
+WHEN  ('?HLColorButton:2')TIMES 0
+WHEN  ('?HLColorButton:3')TIMES 0
+WHEN  ('?HLColorButton:4')TIMES 0
+WHEN  ('?HLColorButton:5')TIMES 0
+WHEN  ('?HLColorButton:6')TIMES 0
+WHEN  ('?HLColorButton:7')TIMES 0
+WHEN  ('?HLColorButton:8')TIMES 0
+
+%CheckedDisables DEPEND %Control MULTI LONG TIMES 0
+
+%CheckedDisableControl DEPEND %CheckedDisables DEFAULT TIMES 0
+
+%CheckedDisableControlAction DEPEND %CheckedDisables DEFAULT TIMES 9
+WHEN  ('')TIMES 0
+WHEN  ('?HLColorButton')TIMES 0
+WHEN  ('?HLColorButton:2')TIMES 0
+WHEN  ('?HLColorButton:3')TIMES 0
+WHEN  ('?HLColorButton:4')TIMES 0
+WHEN  ('?HLColorButton:5')TIMES 0
+WHEN  ('?HLColorButton:6')TIMES 0
+WHEN  ('?HLColorButton:7')TIMES 0
+WHEN  ('?HLColorButton:8')TIMES 0
+
+%UnCheckedDisables DEPEND %Control MULTI LONG TIMES 0
+
+%UnCheckedDisableControl DEPEND %UnCheckedDisables DEFAULT TIMES 0
+
+%UnCheckedDisableControlAction DEPEND %UnCheckedDisables DEFAULT TIMES 9
+WHEN  ('')TIMES 0
+WHEN  ('?HLColorButton')TIMES 0
+WHEN  ('?HLColorButton:2')TIMES 0
+WHEN  ('?HLColorButton:3')TIMES 0
+WHEN  ('?HLColorButton:4')TIMES 0
+WHEN  ('?HLColorButton:5')TIMES 0
+WHEN  ('?HLColorButton:6')TIMES 0
+WHEN  ('?HLColorButton:7')TIMES 0
+WHEN  ('?HLColorButton:8')TIMES 0
+
+%ActiveImageEnable DEPEND %Control LONG TIMES 0
+
+%AIObjectName DEPEND %Control DEFAULT TIMES 9
+WHEN  ('') ('AIBtn0')
+WHEN  ('?HLColorButton') ('AIBtn22')
+WHEN  ('?HLColorButton:2') ('AIBtn11')
+WHEN  ('?HLColorButton:3') ('AIBtn12')
+WHEN  ('?HLColorButton:4') ('AIBtn13')
+WHEN  ('?HLColorButton:5') ('AIBtn25')
+WHEN  ('?HLColorButton:6') ('AIBtn26')
+WHEN  ('?HLColorButton:7') ('AIBtn27')
+WHEN  ('?HLColorButton:8') ('AIBtn28')
+
+%AIEnableMimicControl DEPEND %Control LONG TIMES 9
+WHEN  ('') (1)
+WHEN  ('?HLColorButton') (1)
+WHEN  ('?HLColorButton:2') (1)
+WHEN  ('?HLColorButton:3') (1)
+WHEN  ('?HLColorButton:4') (1)
+WHEN  ('?HLColorButton:5') (1)
+WHEN  ('?HLColorButton:6') (1)
+WHEN  ('?HLColorButton:7') (1)
+WHEN  ('?HLColorButton:8') (1)
+
+%AIMimicControl DEPEND %Control DEFAULT TIMES 9
+WHEN  ('') ('?GROUPSearchText')
+WHEN  ('?HLColorButton') ('?GROUPSearchText')
+WHEN  ('?HLColorButton:2') ('?GROUPSearchText')
+WHEN  ('?HLColorButton:3') ('?GROUPSearchText')
+WHEN  ('?HLColorButton:4') ('?GROUPSearchText')
+WHEN  ('?HLColorButton:5') ('?GROUPSearchText')
+WHEN  ('?HLColorButton:6') ('?GROUPSearchText')
+WHEN  ('?HLColorButton:7') ('?GROUPSearchText')
+WHEN  ('?HLColorButton:8') ('?GROUPSearchText')
+
+%AIImgRound DEPEND %Control LONG TIMES 0
+
+%AIOverrideImg DEPEND %Control DEFAULT TIMES 0
+
+%AIOverrideImgVariable DEPEND %Control DEFAULT TIMES 0
+
+%AIOverrideImgIsVariable DEPEND %Control LONG TIMES 9
+WHEN  ('') (0)
+WHEN  ('?HLColorButton') (0)
+WHEN  ('?HLColorButton:2') (0)
+WHEN  ('?HLColorButton:3') (0)
+WHEN  ('?HLColorButton:4') (0)
+WHEN  ('?HLColorButton:5') (0)
+WHEN  ('?HLColorButton:6') (0)
+WHEN  ('?HLColorButton:7') (0)
+WHEN  ('?HLColorButton:8') (0)
+
+%AIDisableImg DEPEND %Control DEFAULT TIMES 0
+
+%AIDisableImgVariable DEPEND %Control DEFAULT TIMES 0
+
+%AIDisableImgIsVariable DEPEND %Control LONG TIMES 9
+WHEN  ('') (0)
+WHEN  ('?HLColorButton') (0)
+WHEN  ('?HLColorButton:2') (0)
+WHEN  ('?HLColorButton:3') (0)
+WHEN  ('?HLColorButton:4') (0)
+WHEN  ('?HLColorButton:5') (0)
+WHEN  ('?HLColorButton:6') (0)
+WHEN  ('?HLColorButton:7') (0)
+WHEN  ('?HLColorButton:8') (0)
+
+%AIHotImg DEPEND %Control DEFAULT TIMES 0
+
+%AIHotImgVariable DEPEND %Control DEFAULT TIMES 0
+
+%AIHotImgIsVariable DEPEND %Control LONG TIMES 9
+WHEN  ('') (0)
+WHEN  ('?HLColorButton') (0)
+WHEN  ('?HLColorButton:2') (0)
+WHEN  ('?HLColorButton:3') (0)
+WHEN  ('?HLColorButton:4') (0)
+WHEN  ('?HLColorButton:5') (0)
+WHEN  ('?HLColorButton:6') (0)
+WHEN  ('?HLColorButton:7') (0)
+WHEN  ('?HLColorButton:8') (0)
+
+%AIPressedImg DEPEND %Control DEFAULT TIMES 0
+
+%AIPressedImgVariable DEPEND %Control DEFAULT TIMES 0
+
+%AIPressedImgIsVariable DEPEND %Control LONG TIMES 9
+WHEN  ('') (0)
+WHEN  ('?HLColorButton') (0)
+WHEN  ('?HLColorButton:2') (0)
+WHEN  ('?HLColorButton:3') (0)
+WHEN  ('?HLColorButton:4') (0)
+WHEN  ('?HLColorButton:5') (0)
+WHEN  ('?HLColorButton:6') (0)
+WHEN  ('?HLColorButton:7') (0)
+WHEN  ('?HLColorButton:8') (0)
+
+[EMBED]
+EMBED %WindowManagerMethodCodeSection
+[INSTANCES]
+WHEN 'TakeEvent'
+[INSTANCES]
+WHEN '(),BYTE'
+[DEFINITION]
+[SOURCE]
+PROPERTY:BEGIN
+PRIORITY 1300
+PROPERTY:END
+!    UD.DebugEvent()
+
+[END]
+[END]
+WHEN 'Init'
+[INSTANCES]
+WHEN '(),BYTE'
+[DEFINITION]
+[SOURCE]
+PROPERTY:BEGIN
+PRIORITY 300
+PROPERTY:END
+  st.LoadFile('Settings.dat')
+  st.Split('|')
+  TextColor                     =  st.GetLine(1)
+  BackgroundColor               =  st.GetLine(2)
+  SelectedTextColor             =  st.GetLine(3)
+  SelectedBackgroundColor       =  st.GetLine(4)
+
+  TextColorEvents               =  st.GetLine(5)
+  BackgroundColorEvents         =  st.GetLine(6)
+  SelectedTextColorEvents       =  st.GetLine(7)
+  SelectedBackgroundColorEvents =  st.GetLine(8)
+
+[END]
+[END]
+[END]
+EMBED %ControlEventHandling
+[INSTANCES]
+WHEN '?BUTTONSelectColor '
+[INSTANCES]
+WHEN 'Accepted'
+[DEFINITION]
+[SOURCE]
+PROPERTY:BEGIN
+PRIORITY 2500
+PROPERTY:END
+  COLORDIALOG('Select Color',ColorRGB)
+  CASE CurrentField
+  OF ?TextColor
+      TextColor =  ColorRGB
+  OF ?BackgroundColor
+      BackgroundColor =  ColorRGB
+  OF ?SelectedTextColor
+      SelectedTextColor =  ColorRGB
+  OF ?SelectedBackgroundColor
+      SelectedBackgroundColor =  ColorRGB
+  OF ?TextColorEvents
+      TextColorEvents =  ColorRGB
+  OF ?BackgroundColorEvents
+      BackgroundColorEvents =  ColorRGB
+  OF ?SelectedTextColorEvents
+      SelectedTextColorEvents =  ColorRGB
+  OF ?SelectedBackgroundColorEvents
+      SelectedBackgroundColorEvents =  ColorRGB
+  END
+
+  Select(CurrentField)
+  DISPLAY()
+
+[END]
+WHEN 'Selecting'
+[DEFINITION]
+[SOURCE]
+PROPERTY:BEGIN
+PRIORITY 2500
+PROPERTY:END
+  CurrentField = FOCUS()
+  UD.Debug('CurrentField ' & CurrentField)
+
+[END]
+[END]
+WHEN '?BUTTONOK'
+[INSTANCES]
+WHEN 'Accepted'
+[DEFINITION]
+[SOURCE]
+PROPERTY:BEGIN
+PRIORITY 2500
+PROPERTY:END
+  st.SetValue(TextColor & '|' & BackgroundColor & '|' & SelectedTextColor & '|' & SelectedBackgroundColor & '|' & |
+          TextColorEvents & '|' & BackgroundColorEvents & '|' & SelectedTextColorEvents & '|' & SelectedBackgroundColorEvents)
+  st.SaveFile('Settings.dat')
+  ThisWindow.Response = RequestCompleted
+  POST(EVENT:CloseWindow)
+
+[END]
+[END]
+WHEN '?BUTTONCancel'
+[INSTANCES]
+WHEN 'Accepted'
+[DEFINITION]
+[SOURCE]
+PROPERTY:BEGIN
+PRIORITY 2500
+PROPERTY:END
+  ThisWindow.Response = RequestCancelled
+  POST(EVENT:CloseWindow)
+
+[END]
+[END]
+[END]
+EMBED %DataSection
+[DEFINITION]
+[SOURCE]
+PROPERTY:BEGIN
+PRIORITY 50
+PROPERTY:END
+st              StringTheory
+[END]
+[END]
+[ADDITION]
+NAME WinEvent WinEvent
+[INSTANCE]
+INSTANCE 1
+OWNER 6
+[PROMPTS]
+%DisableWinEvent LONG  (0)
+%CheckForCantCloseNowSetHere LONG  (1)
+%AutoDown LONG  (0)
+%NoAutoDown LONG  (0)
+%LocWindowsVisible DEFAULT  ('0')
+%WindowsVisibleAfterOpen LONG  (1)
+%AlertWinEventDebug LONG  (0)
+%DisplayCompileDate LONG  (0)
+%DisplayCompileDateFormat DEFAULT  ('@D6')
+%locNoHandleCloseDown LONG  (0)
+%locCloseDownWhenWindowCloses LONG  (0)
+%locCloseDownWhenWindowClosesCtrl DEFAULT  ('')
+%WinAlert MULTI LONG  ()
+%Mess DEPEND %WinAlert DEFAULT TIMES 0
+
+%Act1 DEPEND %WinAlert DEFAULT TIMES 0
+
+%act2 DEPEND %WinAlert DEFAULT TIMES 0
+
+%locCloseDownWhenWindowClosesSet LONG  (0)
+%SortListbox MULTI LONG  ()
+%ThisListbox DEPEND %SortListbox DEFAULT TIMES 0
+
+%ThisListboxHeader DEPEND %SortListbox MULTI DEFAULT TIMES 0
+
+%gloWinEventTesting LONG  (0)
+%gloWinEventTestingColor1 LONG  (15728618)
+%gloWinEventTestingColor2 LONG  (16777215)
+[ADDITION]
+NAME HighLighter HLColorButton
+[INSTANCE]
+INSTANCE 2
+[PROMPTS]
+%HLFieldToSet DEFAULT  ('?TextColor')
+%HLDialogTitle DEFAULT  ('Select A Color')
+[INSTANCE]
+INSTANCE 3
+[PROMPTS]
+%HLFieldToSet DEFAULT  ('?BackgroundColor')
+%HLDialogTitle DEFAULT  ('Select A Color')
+[INSTANCE]
+INSTANCE 4
+[PROMPTS]
+%HLFieldToSet DEFAULT  ('?SelectedTextColor')
+%HLDialogTitle DEFAULT  ('Select A Color')
+[INSTANCE]
+INSTANCE 5
+[PROMPTS]
+%HLFieldToSet DEFAULT  ('?SelectedBackgroundColor')
+%HLDialogTitle DEFAULT  ('Select A Color')
+[INSTANCE]
+INSTANCE 6
+[PROMPTS]
+%HLFieldToSet DEFAULT  ('?TextColorEvents')
+%HLDialogTitle DEFAULT  ('Select A Color')
+[INSTANCE]
+INSTANCE 7
+[PROMPTS]
+%HLFieldToSet DEFAULT  ('?BackgroundColorEvents')
+%HLDialogTitle DEFAULT  ('Select A Color')
+[INSTANCE]
+INSTANCE 8
+[PROMPTS]
+%HLFieldToSet DEFAULT  ('?SelectedTextColorEvents')
+%HLDialogTitle DEFAULT  ('Select A Color')
+[INSTANCE]
+INSTANCE 9
+[PROMPTS]
+%HLFieldToSet DEFAULT  ('?SelectedBackgroundColorEvents')
+%HLDialogTitle DEFAULT  ('Select A Color')
+[WINDOW]
+Window  WINDOW('Settings'),AT(,,401,247),FONT('Segoe UI',10),GRAY,IMM,SYSTEM
+          GROUP('Search Text'),AT(2,11,209,76),USE(?GROUPSearchText),BOXED,#ORDINAL(1)
+            ENTRY(@s20),AT(108,24,77,10),USE(TextColor),LEFT,#ORDINAL(2)
+            PROMPT('Background Color'),AT(11,38),USE(?BackgroundColor:Prompt),#ORDINAL(3)
+            ENTRY(@s20),AT(108,38,77,10),USE(BackgroundColor),LEFT,#ORDINAL(4)
+            PROMPT('Selected Text Color'),AT(11,52),USE(?SelectedTextColor:Prompt),#ORDINAL(5)
+            ENTRY(@s20),AT(108,51,77,10),USE(SelectedTextColor),LEFT,#ORDINAL(6)
+            PROMPT('Selected Background Color'),AT(11,65),USE(?SelectedBackgroundColor:Prompt), |
+              #ORDINAL(7)
+            ENTRY(@s20),AT(108,65,77,10),USE(SelectedBackgroundColor),LEFT,#ORDINAL(8)
+            PROMPT('Text Color'),AT(11,24),USE(?TextColor:Prompt),#ORDINAL(9)
+            BUTTON('...'),AT(189,24,16,11),USE(?HLColorButton),SKIP,#ORIG(?HLColorButton), |
+              #SEQ(2),#ORDINAL(10)
+            BUTTON('...'),AT(189,37,16,11),USE(?HLColorButton:2),SKIP,#ORIG(?HLColorButton), |
+              #SEQ(3),#ORDINAL(11)
+            BUTTON('...'),AT(189,51,16,11),USE(?HLColorButton:3),SKIP,#ORIG(?HLColorButton), |
+              #SEQ(4),#ORDINAL(12)
+            BUTTON('...'),AT(189,64,16,11),USE(?HLColorButton:4),SKIP,#ORIG(?HLColorButton), |
+              #SEQ(5),#ORDINAL(13)
+          END
+          BUTTON('OK'),AT(289,224,54,22),USE(?BUTTONOK),#ORDINAL(15)
+          BUTTON('Cancel'),AT(346,224,54,22),USE(?BUTTONCancel),#ORDINAL(16)
+          GROUP('Events'),AT(3,97,209,80),USE(?GROUPEvents),BOXED,#ORDINAL(17)
+            PROMPT('Text Color'),AT(11,112),USE(?TextColorEvents:Prompt),#ORDINAL(18)
+            ENTRY(@s20),AT(108,112,77,10),USE(TextColorEvents),LEFT,#ORDINAL(19)
+            PROMPT('Background Color'),AT(11,127),USE(?BackgroundColorEvents:Prompt),#ORDINAL(20)
+            ENTRY(@s20),AT(108,126,77,10),USE(BackgroundColorEvents),LEFT,#ORDINAL(21)
+            PROMPT('Selected Text Color'),AT(11,141),USE(?SelectedTextColorEvents:Prompt), |
+              #ORDINAL(22)
+            ENTRY(@s20),AT(108,140,77,10),USE(SelectedTextColorEvents),LEFT,#ORDINAL(23)
+            PROMPT('Selected Background Color'),AT(11,155),USE(?SelectedBackgroundColorEvents:Prompt), |
+              #ORDINAL(24)
+            ENTRY(@s20),AT(108,154,77,10),USE(SelectedBackgroundColorEvents),LEFT,#ORDINAL(25)
+            BUTTON('...'),AT(189,112,16,11),USE(?HLColorButton:5),SKIP,#ORIG(?HLColorButton), |
+              #SEQ(6),#ORDINAL(10000)
+            BUTTON('...'),AT(189,126,16,11),USE(?HLColorButton:6),SKIP,#ORIG(?HLColorButton), |
+              #SEQ(7),#ORDINAL(10001)
+            BUTTON('...'),AT(189,140,16,11),USE(?HLColorButton:7),SKIP,#ORIG(?HLColorButton), |
+              #SEQ(8),#ORDINAL(10002)
+            BUTTON('...'),AT(189,154,16,11),USE(?HLColorButton:8),SKIP,#ORIG(?HLColorButton), |
+              #SEQ(9),#ORDINAL(10003)
+          END
+        END
+
+[END]

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+# Clarion 2.1.0.2447
+Project("{12B76EC0-1D7B-4FA7-A7D0-C524288B48A1}") = "UDOverView", "UDOverView.cwproj", "{3EB1FDA7-B1FB-49D4-81BC-9CD5C7FCD268}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{{2150E333-8FDC-42A3-9474-1A3956D46DE8}}"
+	ProjectSection(SolutionItems) = postProject
+		UDOverView.app = UDOverView.app
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Classes", "Classes", "{DFD62F4E-281C-45CE-B87B-09B99C132A02}"
+	ProjectSection(SolutionItems) = postProject
+		H:\Dev\Source\SharedClasses\sdkODSMessagePump.inc = H:\Dev\Source\SharedClasses\sdkODSMessagePump.inc
+		H:\Dev\Source\SharedClasses\sdkODSMessagePump.clw = H:\Dev\Source\SharedClasses\sdkODSMessagePump.clw
+		..\..\Source\SharedClasses\RecentsHandler.clw = ..\..\Source\SharedClasses\RecentsHandler.clw
+		..\..\Source\SharedClasses\RecentsHandler.inc = ..\..\Source\SharedClasses\RecentsHandler.inc
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3EB1FDA7-B1FB-49D4-81BC-9CD5C7FCD268}.Debug|Win32.Build.0 = Debug|Win32
+		{3EB1FDA7-B1FB-49D4-81BC-9CD5C7FCD268}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3EB1FDA7-B1FB-49D4-81BC-9CD5C7FCD268}.Release|Win32.Build.0 = Release|Win32
+		{3EB1FDA7-B1FB-49D4-81BC-9CD5C7FCD268}.Release|Win32.ActiveCfg = Release|Win32
+	EndGlobalSection
+EndGlobal
