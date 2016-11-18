@@ -273,7 +273,7 @@ Looped BYTE
        CYCLE
      END
      IF KEYCODE()=CtrlShiftP  
-        UD.ShowProcedureInfo('Settings',UD.SetApplicationName('UDOverView','EXE'),Window{PROP:Hlp},'06/24/2016 @ 02:01PM','07/10/2016 @ 03:47PM','08/26/2016 @ 02:05PM')  
+        UD.ShowProcedureInfo('Settings',UD.SetApplicationName('UDOverView','EXE'),Window{PROP:Hlp},'06/24/2016 @ 02:01PM','07/10/2016 @ 03:47PM','09/24/2016 @ 12:40PM')  
     
        CYCLE
      END

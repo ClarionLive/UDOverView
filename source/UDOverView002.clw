@@ -168,7 +168,7 @@ Minimal              BYTE                                  !
 LastLineSelected     LONG                                  !
 WhichSide            BYTE                                  !
 qPrefix              QUEUE,PRE(qPrefix)                    !
-Prefix               STRING(20)                            !
+Prefix               STRING(60)                            !
                      END                                   !
 qL                   QUEUE,PRE(qL)                         !
 Thread               LONG                                  !
@@ -231,7 +231,7 @@ Process              STRING(160)                           !
 Date                 STRING(26)                            !
 Elapsed              STRING(12)                            !
 Thread               LONG                                  !
-Prefix               STRING(20)                            !
+Prefix               STRING(60)                            !
 App                  STRING(60)                            !
 Module               STRING(100)                           !
 ProcedureName        STRING(100)                           !
@@ -262,7 +262,7 @@ Process              STRING(160)                           !
 Date                 STRING(26)                            !
 Elapsed              STRING(12)                            !
 Thread               LONG                                  !
-Prefix               STRING(20)                            !
+Prefix               STRING(60)                            !
 App                  STRING(60)                            !
 Module               STRING(100)                           !
 ProcedureName        STRING(100)                           !
@@ -348,7 +348,7 @@ Window               WINDOW('UltimateDebug OverView'),AT(,,944,506),FONT('Segoe 
                        LIST,AT(615,32,167,13),USE(?LISTProcedures),FONT(,10),VSCROLL,DROP(7),FORMAT('400L(2)@s100@'), |
   FROM(qProcedures)
                        STRING('Procedure:'),AT(575,34),USE(?STRING2)
-                       LIST,AT(840,32,90,13),USE(?LISTFilterHighlighted),DROP(6),FROM('None|All|Prefix|PID|Pro' & |
+                       LIST,AT(840,32,90,13),USE(?LISTFilterHighlighted),DROP(8),FROM('None|All|Prefix|PID|Pro' & |
   'cess|Thread|Procedure')
                        STRING('Highlighted:'),AT(791,34),USE(?STRING6)
                        SHEET,AT(731,290,211,212),USE(?SHEETContent)
@@ -375,7 +375,7 @@ Window               WINDOW('UltimateDebug OverView'),AT(,,944,506),FONT('Segoe 
                        BUTTON('Find Highlighted'),AT(339,293,73,14),USE(?BUTTONFindHighlighted),SKIP
                        LIST,AT(2,50,940,236),USE(?Messages),FONT(,10),HVSCROLL,COLOR(COLOR:White),GRID(00D3D3D3h), |
   FLAT,FORMAT('32R(2)|M~Line~L(2)@n_9@40R(2)|M~PID~L(2)@n_14@82L(2)|M~Process~@s160@62L' & |
-  '(2)|M~Time~@s12@61L(2)|M~Elapsed~@s12@35L(2)|M~Thread~@n_4@57L(2)|M~Prefix~@s20@73L(' & |
+  '(2)|M~Time~@s12@61L(2)|M~Elapsed~@s12@35L(2)|M~Thread~@n_4@57L(2)|M~Prefix~@s60@73L(' & |
   '2)|M~App~@s60@76L(2)|M~Module~@s100@82L(2)|M~Procedure~@s100@1020L(2)|MY~Message~@s255@'), |
   FROM(q)
                        REGION,AT(729,310,2,191),USE(?EasyHSplit:2),BEVEL(1),IMM
@@ -456,7 +456,7 @@ ReturnValue          BYTE,AUTO
     
         udb_Settings.ModuleName = 'UDOverView002.clw'
         udb_Settings.AppName    = 'UDOverView.EXE'
-        udb_Settings.Modified   = '08/26/2016 @ 09:08AM'
+        udb_Settings.Modified   = '09/24/2016 @ 12:41PM'
         UD.Init('Main',udb_Settings)
     
     
@@ -714,7 +714,7 @@ Looped BYTE
        CYCLE
      END
      IF KEYCODE()=CtrlShiftP  
-        UD.ShowProcedureInfo('Main',UD.SetApplicationName('UDOverView','EXE'),Window{PROP:Hlp},'05/23/2016 @ 10:33PM','08/26/2016 @ 09:08AM','08/26/2016 @ 02:05PM')  
+        UD.ShowProcedureInfo('Main',UD.SetApplicationName('UDOverView','EXE'),Window{PROP:Hlp},'05/23/2016 @ 10:33PM','09/24/2016 @ 12:41PM','09/24/2016 @ 12:41PM')  
     
        CYCLE
      END

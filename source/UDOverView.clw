@@ -1,7 +1,7 @@
    PROGRAM
 
 
-StringTheory:TemplateVersion equate('2.44')
+StringTheory:TemplateVersion equate('2.49')
 ResizeAndSplit:TemplateVersion equate('4.13')
 WINEVENT:Version              equate ('3.96')   !Deprecated
 WinEvent:TemplateVersion      equate('3.96')
@@ -56,7 +56,7 @@ ModuleName                          STRING(100)
 AppName                             STRING(100)
 Modified                            STRING(26)
                             END
- 
+               
 csResizeApp  CLASS(csResizeClass),TYPE
 Fetch            PROCEDURE(STRING Sect,STRING Ent,*? Val),VIRTUAL
 Update           PROCEDURE(STRING Sect,STRING Ent,STRING Val),VIRTUAL
